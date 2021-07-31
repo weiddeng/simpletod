@@ -79,7 +79,7 @@ else:
 model.eval()
 model.to('cuda')
 
-break_tokens = tokenizer.encode(tokenizer._eos_token)
+break_tokens = tokenizer.encode(str(tokenizer._eos_token))
 MAX_LEN = model.config.n_ctx
 
 
@@ -173,6 +173,7 @@ for i, dial_name in enumerate(lex_dict):
 
 
         model_context.append(text)
+        text=text.strip()
         indexed_tokens = tokenizer.encode(text)
         if len(indexed_tokens) > MAX_LEN:
             indexed_tokens = indexed_tokens[-1*MAX_LEN:]
@@ -205,6 +206,7 @@ for i, dial_name in enumerate(lex_dict):
                 text = '{} {}'.format(tmp_pred, db_text_dynamic)
 
             # continue generation
+            text=text.strip()
             indexed_tokens = tokenizer.encode(text)
             if len(indexed_tokens) > MAX_LEN:
                 indexed_tokens = indexed_tokens[-1 * MAX_LEN:]
